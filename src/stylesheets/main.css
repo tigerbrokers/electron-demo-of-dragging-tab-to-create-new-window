@@ -12,6 +12,9 @@ body {
   align-items: center;
   font-family: sans-serif;
   color: #525252;
+
+  -ms-overflow-style: scrollbar;
+  -webkit-app-region: drag;
 }
 
 a {

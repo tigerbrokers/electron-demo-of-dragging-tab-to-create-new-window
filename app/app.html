@@ -3,8 +3,12 @@
 <head>
   <meta charset="utf-8">
   <title>Electron Boilerplate</title>
+  <link href="css/photon.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+  <header class="page-header">
+    这里整个界面都可以定制 <span id="pageTitle"></span>
+  </header>
 
   <div id="app" class="container" style="display: none;">
     <h1 id="greet"></h1>
@@ -17,8 +21,24 @@
     <p>
       Environment: <strong id="env"></strong>
     </p>
-    <p>
+    <p  draggable="true">
       Electron version: <strong id="electron-version"></strong>
+    </p>
+    <p>
+      <button draggable="true"> Drag Me </button>
+      <div class="tab-group">
+        <div class="tab-item" draggable="true">
+          <span class="icon icon-cancel icon-close-tab"></span>
+          Drag Me
+        </div>
+        <div class="tab-item" draggable="true">
+          <span class="icon icon-cancel icon-close-tab"></span>
+          Drag and drop to create new window
+        </div>
+        <div class="tab-item tab-item-fixed">
+          <span class="icon icon-plus"></span>
+        </div>
+      </div>
     </p>
   </div>
 

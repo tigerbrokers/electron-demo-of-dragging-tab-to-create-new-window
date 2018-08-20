@@ -4,6 +4,8 @@ import "./stylesheets/main.css";
 import "./helpers/context_menu.js";
 import "./helpers/external_links.js";
 
+import "xel/xel.min.js";
+
 // ----------------------------------------------------------------------------
 // Everything below is just to show you how it works. You can delete all of it.
 // ----------------------------------------------------------------------------
@@ -12,6 +14,8 @@ import { remote } from "electron";
 import jetpack from "fs-jetpack";
 import { greet } from "./hello_world/hello_world";
 import env from "env";
+
+import { ipcRenderer as ipc } from 'electron';
 
 const app = remote.app;
 const appDir = jetpack.cwd(app.getAppPath());
@@ -33,3 +37,20 @@ document.querySelector("#author").innerHTML = manifest.author;
 document.querySelector("#env").innerHTML = env.name;
 document.querySelector("#electron-version").innerHTML =
   process.versions.electron;
+
+const drs = document.querySelectorAll('[draggable]')
+
+function handleDragStart(e) {
+  this.style.opacity = '0.4'
+  ipc.send('create-new-window', {
+    x: e.screenX,
+    y: e.screenY
+  })
+}
+
+[].forEach.call(drs, col => {
+  col.addEventListener('dragend', handleDragStart, false)
+})
+
+const s = location.hash
+document.querySelector('#pageTitle').innerHTML = s

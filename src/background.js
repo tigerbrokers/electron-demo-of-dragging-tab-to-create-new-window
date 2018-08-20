@@ -5,7 +5,7 @@
 
 import path from "path";
 import url from "url";
-import { app, Menu } from "electron";
+import { app, Menu, ipcMain as ipc } from "electron";
 import { devMenuTemplate } from "./menu/dev_menu_template";
 import { editMenuTemplate } from "./menu/edit_menu_template";
 import createWindow from "./helpers/window";
@@ -58,3 +58,24 @@ app.on("ready", () => {
 app.on("window-all-closed", () => {
   app.quit();
 });
+
+let wid = 0
+ipc.on('create-new-window', (e, { title, x, y }) => {
+  console.log(e.sender)
+  const { width, height } = e.sender.browserWindowOptions
+  const child = createWindow('child', {
+    width,
+    height,
+    x,
+    y
+  })
+
+  child.loadURL(
+    url.format({
+      pathname: path.join(__dirname, "app.html"),
+      protocol: "file:",
+      slashes: true,
+      hash: '#wid: ' + ++wid
+    })
+  )
+})

@@ -60,22 +60,21 @@ app.on("window-all-closed", () => {
 });
 
 let wid = 0
-ipc.on('create-new-window', (e, { title, x, y }) => {
-  console.log(e.sender)
-  const { width, height } = e.sender.browserWindowOptions
-  const child = createWindow('child', {
-    width,
-    height,
-    x,
-    y
-  })
+ipc.on('create-new-window', (e, opts) => {
+  // console.log(e.sender)
+  // const { width, height } = e.sender.browserWindowOptions
+  const child = createWindow('child', { ...opts, show: false })
 
+  console.log(opts.x, opts.y)
   child.loadURL(
     url.format({
-      pathname: path.join(__dirname, "app.html"),
+      pathname: path.join(__dirname, "3d/index.html"),
       protocol: "file:",
       slashes: true,
       hash: '#wid: ' + ++wid
     })
   )
+  child.on('ready-to-show', () => {
+    child.show()
+  })
 })

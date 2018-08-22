@@ -54,3 +54,26 @@ function handleDragStart(e) {
 
 const s = location.hash
 document.querySelector('#pageTitle').innerHTML = s
+
+
+
+const madBtn = document.querySelector('#madBtn')
+
+madBtn.addEventListener('click', handleMadMode)
+
+function handleMadMode () {
+  const COUNT = 9
+  const { availWidth, availHeight } = window.screen
+  const width = Math.floor(availWidth / 3)
+  const height = Math.floor(availHeight / 3)
+
+  let t = 0
+  while (t < COUNT) {
+    const x = width * Math.floor(t % 3)
+    const y = height * Math.floor(t / 3)
+    ipc.send('create-new-window', {
+      x, y, width, height
+    })
+    t++
+  }
+}

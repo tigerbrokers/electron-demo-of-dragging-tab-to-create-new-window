@@ -44,7 +44,7 @@ function handleDragStart(e) {
   this.style.opacity = '0.4'
   ipc.send('create-new-window', {
     x: e.screenX,
-    y: e.screenY
+    y: e.screenY - e.toElement.offsetHeight
   })
 }
 

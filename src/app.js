@@ -40,7 +40,7 @@ document.querySelector("#electron-version").innerHTML =
 
 const drs = document.querySelectorAll('[draggable]')
 
-function handleDragStart(e) {
+function handleDragEnd(e) {
   this.style.opacity = '0.4'
   ipc.send('create-new-window', {
     x: e.screenX,
@@ -49,7 +49,7 @@ function handleDragStart(e) {
 }
 
 [].forEach.call(drs, col => {
-  col.addEventListener('dragend', handleDragStart, false)
+  col.addEventListener('dragend', handleDragEnd, false)
 })
 
 const s = location.hash
